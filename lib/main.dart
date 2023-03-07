@@ -15,7 +15,7 @@ class NoteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
+    //  theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: Routes.onGenerateRoutes,
     );

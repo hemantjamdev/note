@@ -9,6 +9,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => Splash());
       case "/home":
         return MaterialPageRoute(builder: (context) => HomePage());
+      case "/edit_note":
+        return MaterialPageRoute(builder: (context) => HomePage());
     }
   }
 }
