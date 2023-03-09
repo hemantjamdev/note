@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,13 +17,29 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            width: MediaQuery.of(context).size.width,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Lottie.asset("assets/animation/sun.json",
+              height: 100
+              ),
+              Lottie.asset("assets/animation/bird.json",height: 50),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Lottie.asset("assets/animation/chicken.json",height: 100),
+                  Lottie.asset("assets/animation/cow.json",height: 85),
+                ],
+              ),
+            ],
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.7,
-            minChildSize: 0.7,
+            initialChildSize: 0.67,
+            minChildSize: 0.67,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
                 decoration: const BoxDecoration(
@@ -61,7 +78,8 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(38.0),
-                                      child: Center(child: Text("Title ${index}")),
+                                      child:
+                                          Center(child: Text("Title ${index}")),
                                     ),
                                   ),
                                   SizedBox(height: 2),

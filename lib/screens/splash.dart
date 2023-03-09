@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _SplashState extends State<Splash> {
       color: Colors.orange,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
+      child: Lottie.asset("assets/animation/splash.json"),
     );
   }
 }
