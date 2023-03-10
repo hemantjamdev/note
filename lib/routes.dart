@@ -12,6 +12,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const HomePage());
       case "/edit_note":
         return MaterialPageRoute(builder: (context) => const EditNote());
+      case "/add_note":
+        return MaterialPageRoute(builder: (context) => const EditNote());
     }
   }
 }

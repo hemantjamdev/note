@@ -152,9 +152,7 @@ class _HomePageState extends State<HomePage> {
                                   },
                                 ),
                               )
-                            : Center(
-                                child: Text("press + to add notes."),
-                              );
+                            : Expanded(child: Center(child: Text("Your notes will be diplay here.")));
                       },
                     ),
                   ],
