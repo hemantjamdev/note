@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note/constants/local_storage.dart';
-import 'package:note/model/note_model.dart';
-import 'package:note/widgets/add_bar.dart';
+import 'package:note/constants/strings.dart';
+import 'package:note/local_storage/local_storage.dart';
+import 'package:note/widgets/app_bar.dart';
+import 'package:note/widgets/toast.dart';
 
 class AddNote extends StatefulWidget {
   const AddNote({Key? key}) : super(key: key);
@@ -18,32 +18,43 @@ class _AddNoteState extends State<AddNote> {
   final dbHelper = DBHelper();
 
   @override
+  void dispose() {
+    _titleController.dispose();
+    _discController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        heroTag: 'hi',
-        onPressed: ()  {
-          dbHelper
-              .add(title: _titleController.text, disc: _discController.text)
-              .then((value) => {Navigator.pop(context)});
+        heroTag: Strings.fabHero,
+        onPressed: () {
+          if (_titleController.text.isEmpty && _discController.text.isEmpty) {
+            buildToast(text: Strings.noteDiscard);
+            Navigator.pop(context);
+          } else {
+            dbHelper
+                .add(title: _titleController.text, disc: _discController.text)
+                .then((value) => {Navigator.pop(context)});
+          }
         },
-        child: Icon(Icons.done),
+        child: const Icon(Icons.done),
       ),
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title:Hero(tag:'title',child:Text('Add Note',style: Theme.of(context).textTheme.titleMedium,)) ,),
+      appBar:
+          buildAppBar(context: context, title: Strings.addNote, isHome: false),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             TextField(
+              autofocus: true,
               onSubmitted: (String text) {
                 FocusScope.of(context).requestFocus(_discFocus);
               },
               controller: _titleController,
-              decoration: InputDecoration(
-                hintText: "Title",
+              decoration: const InputDecoration(
+                hintText: Strings.hintTitle,
                 hintStyle: TextStyle(fontSize: 32),
               ),
             ),
@@ -53,7 +64,7 @@ class _AddNoteState extends State<AddNote> {
                 maxLines: null,
                 textInputAction: TextInputAction.newline,
                 controller: _discController,
-                decoration: InputDecoration(hintText: "Description"),
+                decoration: const InputDecoration(hintText: Strings.hintDesc),
               ),
             )
           ],

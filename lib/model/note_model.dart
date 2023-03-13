@@ -11,7 +11,11 @@ class NoteModel {
   @HiveField(2)
   final String disc;
   @HiveField(3)
-  final String time;
+  final DateTime time;
 
-  NoteModel({required this.title, required this.disc, required this.time,required this.key});
+  NoteModel(
+      {required this.title,
+      required this.disc,
+      required this.time,
+      required this.key});
 }
