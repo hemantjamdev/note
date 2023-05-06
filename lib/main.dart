@@ -8,6 +8,8 @@ import 'package:note/model/note_model.dart';
 import 'package:note/routes.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
+import 'note_app.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Directory dir = await path_provider.getApplicationDocumentsDirectory();
@@ -17,19 +19,4 @@ void main() async {
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((value) => runApp(const NoteApp()));
-}
-
-class NoteApp extends StatelessWidget {
-  const NoteApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.system,
-      title: Strings.title,
-      theme: ThemeData(useMaterial3: true),
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: Routes.onGenerateRoutes,
-    );
-  }
 }

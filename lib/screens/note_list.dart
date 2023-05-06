@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:note/constants/routes_name.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/model/note_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note/utils/date_formate.dart';
 import 'package:note/widgets/app_bar.dart';
-import 'package:note/widgets/confirmation_dialog.dart';
+import 'package:sizer/sizer.dart';
+import 'package:share_plus/share_plus.dart';
+import '../widgets/note.dart';
 
 class NoteList extends StatefulWidget {
   const NoteList({Key? key}) : super(key: key);
@@ -19,28 +21,15 @@ class NoteList extends StatefulWidget {
 class _NoteListState extends State<NoteList> {
   final dbHelper = DBHelper();
 
-  void _handleDelete(
-      {required BuildContext context, required String key}) async {
-    await confirmation(context: context, text: Strings.thisItem).then((value) {
-      if (value) {
-        dbHelper.delete(key: key);
-      }
-    });
+  void handleDelete(String key) {
+    dbHelper.delete(key: key);
   }
 
-  String getOrdinalSuffix(int day) {
-    if (day >= 11 && day <= 13) {
-      return "th";
-    }
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
+  void handleShare(String key) async {
+    NoteModel? note = await dbHelper.getNoteByKey(key);
+    if (note != null) {
+      String text = "${note.title}\n${note.disc}\n${formattedDate(note.time)}";
+      await Share.share(text);
     }
   }
 
@@ -68,23 +57,27 @@ class _NoteListState extends State<NoteList> {
           buildAppBar(context: context, title: Strings.noteList, isHome: true),
       body: Stack(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Lottie.asset(Strings.sun, height: 100),
-              Lottie.asset(Strings.bird, height: 50),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Lottie.asset(Strings.chicken, height: 100, repeat: false),
-                  Lottie.asset(Strings.cow, height: 85),
-                ],
-              ),
-            ],
+          Lottie.asset(Strings.bird, height: 200),
+          Container(
+            alignment: Alignment.bottomCenter,
+            height: 32.h,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Lottie.asset(Strings.sun, height: 12.h),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Lottie.asset(Strings.chicken, height: 15.h),
+                    Lottie.asset(Strings.cow, height: 12.h),
+                  ],
+                ),
+              ],
+            ),
           ),
           DraggableScrollableSheet(
             initialChildSize: 0.67,
@@ -120,102 +113,27 @@ class _NoteListState extends State<NoteList> {
                                   controller: scrollController,
                                   itemCount: noteList.length,
                                   itemBuilder: (context, int index) {
-                                    DateTime dateTime = noteList[index].time;
-                                    DateTime current = DateTime.now();
-                                    String onlyHour = DateFormat("hh:mm")
-                                        .format(noteList[index].time);
-
-                                    String formattedDate = DateFormat(
-                                            "dd'${getOrdinalSuffix(dateTime.day)}' MMM yy  hh:mm")
-                                        .format(dateTime);
-
-                                    return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              NoteModel notes = NoteModel(
-                                                  key: noteList[index].key,
-                                                  disc: noteList[index].disc,
-                                                  time: noteList[index].time,
-                                                  title: noteList[index].title);
-                                              Navigator.pushNamed(
-                                                  context, RoutesName.editRoute,
-                                                  arguments: notes);
-                                            },
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              decoration: const BoxDecoration(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(12),
-                                                  topRight: Radius.circular(12),
-                                                ),
-                                                color: Colors.white,
-                                              ),
-                                              child: ListTile(
-                                                title: Text(
-                                                  noteList[index].title,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                ),
-                                                subtitle: Text(
-                                                  noteList[index].disc,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 2,
-                                                ),
-                                                trailing: Text(
-                                                  dateTime.day == current.day &&
-                                                          dateTime.year ==
-                                                              current.year &&
-                                                          dateTime.month ==
-                                                              current.month
-                                                      ? "Today $onlyHour"
-                                                      : formattedDate,
-                                                  style: const TextStyle(
-                                                    fontSize: 10,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          GestureDetector(
-                                              onTap: () {
-                                                _handleDelete(
-                                                    context: context,
-                                                    key: noteList[index].key);
-                                              },
-                                              child: Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  decoration: const BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              bottomLeft: Radius
-                                                                  .circular(12),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          12)),
-                                                      color: Colors.white),
-                                                  child:
-                                                      const Icon(Icons.delete)))
-                                        ]));
+                                    return noteWidget(
+                                      note: noteList[index],
+                                      context: context,
+                                      dateTime: noteList[index].time,
+                                      handleDelete: handleDelete,
+                                      handleShare: handleShare,
+                                    );
                                   },
                                 ),
                               )
                             : const Expanded(
                                 child: Center(
-                                    child: Text(
-                                Strings.emptyData,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              )));
+                                  child: Text(
+                                    Strings.emptyData,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              );
                       },
                     ),
                   ],

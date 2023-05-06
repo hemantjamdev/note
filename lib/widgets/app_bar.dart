@@ -12,7 +12,7 @@ AppBar buildAppBar(
       tag: Strings.titleHero,
       child: Text(
         title,
-        style: Theme.of(context).textTheme.titleMedium,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
     ),
     centerTitle: true,
@@ -21,6 +21,5 @@ AppBar buildAppBar(
           ? buildDeleteAll(context: context, text: Strings.allItem)
           : const SizedBox(),
     ],
-    // backgroundColor: Colors.blueGrey,
-  );
+      );
 }

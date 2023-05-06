@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:note/constants/routes_name.dart';
@@ -13,8 +15,8 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2),
-        () => Navigator.pushReplacementNamed(context, RoutesName.homepageRoute));
+    //  Future.delayed(const Duration(seconds: 2),
+    //      () => Navigator.pushReplacementNamed(context, RoutesName.homepageRoute));
   }
 
   @override
@@ -23,7 +25,12 @@ class _SplashState extends State<Splash> {
       color: Colors.white54,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      child: Lottie.asset("assets/animation/splash.json"),
+      child: Lottie.asset("assets/animation/splash.json", onLoaded: (onLoaded) {
+        Future.delayed(
+            const Duration(seconds: 1),
+            () => Navigator.pushReplacementNamed(
+                context, RoutesName.homepageRoute));
+      }),
     );
   }
 }

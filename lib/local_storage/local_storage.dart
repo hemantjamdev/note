@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive/hive.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/model/note_model.dart';
@@ -34,13 +36,18 @@ class DBHelper {
     hive.put(key, note);
   }
 
-  delete({required String key}) async {
+  void delete({required String key}) async {
     final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
     hive.delete(key);
   }
 
-  deleteAll() async {
+  void deleteAll() async {
     final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
     hive.clear();
+  }
+
+  Future<NoteModel?> getNoteByKey(String key) async {
+    final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
+    return hive.get(key);
   }
 }
