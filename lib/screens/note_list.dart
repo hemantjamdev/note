@@ -28,7 +28,8 @@ class _NoteListState extends State<NoteList> {
   void handleShare(String key) async {
     NoteModel? note = await dbHelper.getNoteByKey(key);
     if (note != null) {
-      String text = "${note.title}\n${note.disc}\n${formattedDate(note.time)}";
+      String text =
+          "${note.title}\n\n${note.disc}\n\n${formattedDate(note.time)}";
       await Share.share(text);
     }
   }
@@ -53,8 +54,7 @@ class _NoteListState extends State<NoteList> {
             Navigator.pushNamed(context, RoutesName.noteAddRoute);
           },
           label: const Text(Strings.add)),
-      appBar:
-          buildAppBar(context: context, title: Strings.noteList, isHome: true),
+      appBar: buildAppBar(context: context,title: "Your notes", isHome: true),
       body: Stack(
         children: [
           Lottie.asset(Strings.bird, height: 200),
