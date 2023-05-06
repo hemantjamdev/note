@@ -1,16 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/widgets/delete_all.dart';
 
-import '../model/note_model.dart';
-
 AppBar buildAppBar(
     {required BuildContext context, String? title, bool isHome = false}) {
-  log("---> is home ----${isHome.toString()}<<----");
   return AppBar(
     automaticallyImplyLeading: false,
     title: Hero(
@@ -21,27 +16,20 @@ AppBar buildAppBar(
           },
           child: isHome
               ? ValueListenableBuilder(
-                  valueListenable: Hive.box<String>("titleData").listenable(),
+                  valueListenable:
+                      Hive.box<String>(Strings.titleDatabaseName).listenable(),
                   builder: (context, Box<String> box, widget) {
-                     if(box.values.isNotEmpty){
-                       log("title data lengh--->${box.values.length}");
-                       log("title data lengh--->${box.keys.toList()}");
-                       log("title data lengh--->${box.values.length}");
-                       return Text(
-                        box.values.first.toString(),
+                    if (box.values.isNotEmpty) {
+                      return Text(
+                        "${box.values.first.toString()}'s notes",
                         style: Theme.of(context).textTheme.titleLarge,
-                       );
-                    }else{
-                       return Text(
-                         "Your Notes",
-                         style: Theme.of(context).textTheme.titleLarge,
-                       );
-                     }
-                        /*?
-                        : Text(
-                            "Your Notes",
-                            style: Theme.of(context).textTheme.titleLarge,
-                          );*/
+                      );
+                    } else {
+                      return Text(
+                        Strings.noteList,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      );
+                    }
                   })
               : Text(
                   title!,
@@ -55,14 +43,7 @@ AppBar buildAppBar(
           : const SizedBox(),
     ],
   );
-} /*
-
-Future<String> getTitle() async {
-  DBHelper dbHelper = DBHelper();
-  NoteModel? titleNote = await dbHelper.getNoteByKey("title");
-  String title = titleNote!.title;
-  return title;
-}*/
+}
 
 saveTitle(BuildContext context, String? title) async {
   TextEditingController controller = TextEditingController();
@@ -71,7 +52,7 @@ saveTitle(BuildContext context, String? title) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text("Update Title"),
+        title: const Text(Strings.updateTitle),
         content: TextField(
           onSubmitted: (value) => Navigator.pop(context, true),
           controller: controller,
@@ -85,15 +66,15 @@ saveTitle(BuildContext context, String? title) async {
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text("Update")),
+              child: const Text(Strings.update)),
           TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text("Cancel")),
+              child: const Text(Strings.cancel)),
         ],
       );
     },
   );
-  update ? dbHelper.saveTitle(controller.text) : null;
+  update&&controller.text.isNotEmpty ? dbHelper.saveTitle(controller.text) : null;
 }

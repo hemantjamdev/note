@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note/constants/app_icons.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/widgets/app_bar.dart';
@@ -39,7 +40,7 @@ class _AddNoteState extends State<AddNote> {
                 .then((value) => {Navigator.pop(context)});
           }
         },
-        child: const Icon(Icons.done),
+        child: AppIcons.done,
       ),
       appBar:
           buildAppBar(context: context, title: Strings.addNote, isHome: false),

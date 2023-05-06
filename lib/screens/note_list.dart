@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:note/constants/colors.dart';
 import 'package:note/constants/routes_name.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
@@ -18,7 +21,10 @@ class NoteList extends StatefulWidget {
   State<NoteList> createState() => _NoteListState();
 }
 
-class _NoteListState extends State<NoteList> {
+class _NoteListState extends State<NoteList>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+  bool night = false;
   final dbHelper = DBHelper();
 
   void handleDelete(String key) {
@@ -36,6 +42,7 @@ class _NoteListState extends State<NoteList> {
 
   @override
   void initState() {
+    animationController = AnimationController(vsync: this);
     super.initState();
   }
 
@@ -54,10 +61,16 @@ class _NoteListState extends State<NoteList> {
             Navigator.pushNamed(context, RoutesName.noteAddRoute);
           },
           label: const Text(Strings.add)),
-      appBar: buildAppBar(context: context,title: "Your notes", isHome: true),
+      appBar:
+          buildAppBar(context: context, title: Strings.noteList, isHome: true),
       body: Stack(
         children: [
-          Lottie.asset(Strings.bird, height: 200),
+          night
+              ? Lottie.asset(Strings.night,
+                  height: 100.h, width: 100.w, fit: BoxFit.fill)
+              : const SizedBox(),
+          Lottie.asset(Strings.background, height: 100.h, width: 100.w),
+          !night ? Lottie.asset(Strings.bird, height: 200) : const SizedBox(),
           Container(
             alignment: Alignment.bottomCenter,
             height: 32.h,
@@ -66,14 +79,20 @@ class _NoteListState extends State<NoteList> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Lottie.asset(Strings.sun, height: 12.h),
+                !night
+                    ? Lottie.asset(Strings.sun, height: 12.h)
+                    : Lottie.asset(Strings.moon, height: 12.h),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Lottie.asset(Strings.chicken, height: 15.h),
-                    Lottie.asset(Strings.cow, height: 12.h),
+                    !night
+                        ? Lottie.asset(Strings.chicken, height: 15.h)
+                        : const SizedBox(),
+                    !night
+                        ? Lottie.asset(Strings.cow, height: 12.h)
+                        : const SizedBox(),
                   ],
                 ),
               ],
@@ -88,7 +107,7 @@ class _NoteListState extends State<NoteList> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25)),
-                  color: Colors.black54,
+                  color: AppColors.black54,
                 ),
                 child: Column(
                   children: [
@@ -98,7 +117,7 @@ class _NoteListState extends State<NoteList> {
                       width: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.black,
+                        color: AppColors.black,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -116,7 +135,6 @@ class _NoteListState extends State<NoteList> {
                                     return noteWidget(
                                       note: noteList[index],
                                       context: context,
-                                      dateTime: noteList[index].time,
                                       handleDelete: handleDelete,
                                       handleShare: handleShare,
                                     );
@@ -129,7 +147,7 @@ class _NoteListState extends State<NoteList> {
                                     Strings.emptyData,
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                     ),
                                   ),
                                 ),
@@ -140,6 +158,29 @@ class _NoteListState extends State<NoteList> {
                 ),
               );
             },
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                log("toggled---$night");
+                night
+                    ? animationController.forward()
+                    : animationController.reverse();
+                night = !night;
+              });
+            },
+            child: Lottie.asset(
+              fit: BoxFit.fill,
+              alignment: Alignment.topLeft,
+              onLoaded: (composition) {
+                animationController.duration = composition.duration;
+              },
+              Strings.themeSwitch,
+              height: 15.h,
+              width: 30.w,
+              controller: animationController,
+              animate: false,
+            ),
           ),
         ],
       ),

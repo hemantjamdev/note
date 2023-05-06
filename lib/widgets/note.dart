@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:note/constants/app_icons.dart';
+import 'package:note/constants/colors.dart';
 import 'package:note/constants/routes_name.dart';
 import 'package:note/model/note_model.dart';
 
@@ -9,11 +11,10 @@ import '../utils/date_formate.dart';
 Slidable noteWidget(
     {required NoteModel note,
     required BuildContext context,
-    required DateTime dateTime,
     required Function handleDelete,
     required Function(String key) handleShare}) {
   DateTime current = DateTime.now();
-  String onlyHour = DateFormat("hh:mm").format(dateTime);
+  String onlyHour = DateFormat("hh:mm").format(note.time);
   return Slidable(
     endActionPane: ActionPane(
       motion: const DrawerMotion(),
@@ -24,10 +25,10 @@ Slidable noteWidget(
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: Colors.white, width: 3)),
+                  border: Border.all(color: AppColors.white, width: 3)),
               child: IconButton(
-                onPressed:()=> handleDelete(note.key),
-                icon: const Icon(Icons.delete, color: Colors.white),
+                onPressed: () => handleDelete(note.key),
+                icon: AppIcons.delete,
               )),
         ),
         Flexible(
@@ -36,13 +37,10 @@ Slidable noteWidget(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: Colors.white, width: 3)),
+                border: Border.all(color: AppColors.white, width: 3)),
             child: IconButton(
-              onPressed: ()=>handleShare(note.key),
-              icon: const Icon(
-                Icons.share,
-                color: Colors.white,
-              ),
+              onPressed: () => handleShare(note.key),
+              icon: AppIcons.share,
             ),
           ),
         ),
@@ -69,7 +67,7 @@ Slidable noteWidget(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12)),
-                color: Colors.white,
+                color:AppColors.white,
               ),
               child: ListTile(
                 title: Text(
@@ -93,14 +91,14 @@ Slidable noteWidget(
                   bottomLeft: Radius.circular(12),
                   bottomRight: Radius.circular(12),
                 ),
-                color: Colors.white),
+                color: AppColors.white),
             child: Center(
               child: Text(
-                dateTime.day == current.day &&
-                        dateTime.year == current.year &&
-                        dateTime.month == current.month
+                note.time.day == current.day &&
+                        note.time.year == current.year &&
+                        note.time.month == current.month
                     ? "Today $onlyHour"
-                    : formattedDate(dateTime),
+                    : formattedDate(note.time),
                 style: const TextStyle(fontSize: 22),
               ),
             ),

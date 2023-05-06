@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:note/constants/colors.dart';
 import 'package:note/constants/routes_name.dart';
+import 'package:note/constants/strings.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -15,17 +17,15 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    //  Future.delayed(const Duration(seconds: 2),
-    //      () => Navigator.pushReplacementNamed(context, RoutesName.homepageRoute));
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white54,
+      color: AppColors.white54,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      child: Lottie.asset("assets/animation/splash.json", onLoaded: (onLoaded) {
+      child: Lottie.asset(Strings.splash, onLoaded: (onLoaded) {
         Future.delayed(
             const Duration(seconds: 1),
             () => Navigator.pushReplacementNamed(

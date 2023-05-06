@@ -16,7 +16,7 @@ void main() async {
   Hive.init(dir.path);
   Hive.registerAdapter(NoteModelAdapter());
   Hive.openBox<NoteModel>(Strings.databaseName);
-  Hive.openBox<String>("titleData");
+  Hive.openBox<String>(Strings.titleDatabaseName);
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((value) => runApp(const NoteApp()));

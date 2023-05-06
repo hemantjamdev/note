@@ -17,10 +17,8 @@ class DBHelper {
   Uuid uuid = const Uuid();
 
   saveTitle(String titleName) async {
-    final hive = await Hive.openBox<String>("titleData");
-    final DateTime dateTime = DateTime.now();
-    hive.put("title", titleName);
-    log("title saved");
+    final hive = await Hive.openBox<String>(Strings.titleDatabaseName);
+    hive.put(Strings.titleDatabaseKey, titleName);
   }
 
   add({required String title, required String disc}) async {
@@ -30,7 +28,6 @@ class DBHelper {
     NoteModel note =
         NoteModel(key: key, title: title, disc: disc, time: dateTime);
     hive.put(key, note);
-    log("note added");
   }
 
   update(
@@ -42,19 +39,16 @@ class DBHelper {
     NoteModel note =
         NoteModel(key: key, title: title, disc: disc, time: dateTime);
     hive.put(key, note);
-    log("title updated");
   }
 
   void delete({required String key}) async {
     final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
     hive.delete(key);
-    log("title deleted");
   }
 
   void deleteAll() async {
     final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
     hive.clear();
-    log("deleted all");
   }
 
   Future<NoteModel?> getNoteByKey(String key) async {

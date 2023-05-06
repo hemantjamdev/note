@@ -7,6 +7,8 @@ class Strings {
 
   /// database
   static const String databaseName = "note_db";
+  static const String titleDatabaseName = "titleData";
+  static const String titleDatabaseKey = "title";
 
   /// general
   static const String add = "Add Note";
@@ -20,6 +22,8 @@ class Strings {
   static const String noteDiscard = "Empty notes are discarded";
   static const String hintTitle = "Title";
   static const String hintDesc = "Description";
+  static const String updateTitle = "Update Title";
+  static const String update = "Update";
 
   /// assets names
   static const String splash = "assets/animation/splash.json";
@@ -28,6 +32,11 @@ class Strings {
   static const String cow = "assets/animation/cow.json";
   static const String chicken = "assets/animation/chicken.json";
   static const String notFound = "assets/animation/notfound.json";
+  static const String background = "assets/animation/background.json";
+  static const String night = "assets/animation/night.json";
+  static const String moon = "assets/animation/moon.json";
+  static const String owl = "assets/animation/owl.json";
+  static const String themeSwitch = "assets/animation/switch.json";
 
   ///hero tag
   static const String titleHero = "title";

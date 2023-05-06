@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note/constants/app_icons.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/model/note_model.dart';
@@ -15,11 +16,8 @@ class EditNote extends StatefulWidget {
 
 class _EditNoteState extends State<EditNote> {
   late TextEditingController _titleController;
-
   late TextEditingController _discController;
-
   final FocusNode _discFocus = FocusNode();
-
   final dbHelper = DBHelper();
 
   @override
@@ -49,7 +47,7 @@ class _EditNoteState extends State<EditNote> {
                   disc: _discController.text)
               .then((value) => {Navigator.pop(context)});
         },
-        child: const Icon(Icons.done),
+        child:AppIcons.done,
       ),
       appBar:
           buildAppBar(context: context, title: Strings.editNote, isHome: false),
