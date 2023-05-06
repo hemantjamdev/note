@@ -45,6 +45,7 @@ dependencies:
   sizer: ^2.0.15
   flutter_slidable: ^3.0.0
   share_plus: ^6.3.4
+  rive: ^0.10.4
 
 dev_dependencies:
   hive_generator:

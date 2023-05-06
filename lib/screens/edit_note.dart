@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:note/constants/app_icons.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/model/note_model.dart';
 import 'package:note/widgets/app_bar.dart';
+import 'package:sizer/sizer.dart';
 
 class EditNote extends StatefulWidget {
   final NoteModel noteModel;
@@ -51,32 +53,38 @@ class _EditNoteState extends State<EditNote> {
       ),
       appBar:
           buildAppBar(context: context, title: Strings.editNote, isHome: false),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              focusNode: _discFocus,
-              onSubmitted: (String text) {
-                FocusScope.of(context).requestFocus(_discFocus);
-              },
-              controller: _titleController,
-              decoration: const InputDecoration(
-                hintText: Strings.hintTitle,
-                hintStyle: TextStyle(fontSize: 32),
-              ),
+      body: Stack(
+        children: [
+          Lottie.asset(Strings.background, height: 100.h, width: 100.w),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TextField(
+                  focusNode: _discFocus,
+                  onSubmitted: (String text) {
+                    FocusScope.of(context).requestFocus(_discFocus);
+                  },
+                  controller: _titleController,
+                  decoration: const InputDecoration(
+                    hintText: Strings.hintTitle,
+                    hintStyle: TextStyle(fontSize: 32),
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    autofocus: true,
+                    maxLines: null,
+                    textInputAction: TextInputAction.newline,
+                    controller: _discController,
+                    decoration: const InputDecoration(hintText: Strings.hintDesc),
+                  ),
+                )
+              ],
             ),
-            Expanded(
-              child: TextField(
-                autofocus: true,
-                maxLines: null,
-                textInputAction: TextInputAction.newline,
-                controller: _discController,
-                decoration: const InputDecoration(hintText: Strings.hintDesc),
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

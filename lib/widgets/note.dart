@@ -22,7 +22,7 @@ Slidable noteWidget(
         Flexible(
           flex: 1,
           child: Container(
-              margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   border: Border.all(color: AppColors.white, width: 3)),
@@ -34,7 +34,7 @@ Slidable noteWidget(
         Flexible(
           flex: 1,
           child: Container(
-            margin: const EdgeInsets.all(8),
+            margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 border: Border.all(color: AppColors.white, width: 3)),
@@ -99,7 +99,7 @@ Slidable noteWidget(
                         note.time.month == current.month
                     ? "Today $onlyHour"
                     : formattedDate(note.time),
-                style: const TextStyle(fontSize: 22),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
           )

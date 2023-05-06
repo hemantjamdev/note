@@ -33,9 +33,10 @@ class Strings {
   static const String chicken = "assets/animation/chicken.json";
   static const String notFound = "assets/animation/notfound.json";
   static const String background = "assets/animation/background.json";
-  static const String night = "assets/animation/night.json";
+  static const String night = "assets/animation/night.riv";
   static const String moon = "assets/animation/moon.json";
   static const String owl = "assets/animation/owl.json";
+  static const String girl = "assets/animation/girl.riv";
   static const String themeSwitch = "assets/animation/switch.json";
 
   ///hero tag

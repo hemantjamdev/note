@@ -8,8 +8,10 @@ import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/model/note_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note/screens/Demo.dart';
 import 'package:note/utils/date_formate.dart';
 import 'package:note/widgets/app_bar.dart';
+import 'package:rive/rive.dart';
 import 'package:sizer/sizer.dart';
 import 'package:share_plus/share_plus.dart';
 import '../widgets/note.dart';
@@ -18,10 +20,10 @@ class NoteList extends StatefulWidget {
   const NoteList({Key? key}) : super(key: key);
 
   @override
-  State<NoteList> createState() => _NoteListState();
+  State<NoteList> createState() => NoteListState();
 }
 
-class _NoteListState extends State<NoteList>
+class NoteListState extends State<NoteList>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   bool night = false;
@@ -59,15 +61,21 @@ class _NoteListState extends State<NoteList>
           heroTag: Strings.fabHero,
           onPressed: () {
             Navigator.pushNamed(context, RoutesName.noteAddRoute);
+            //Navigator.push(context,MaterialPageRoute(builder: (context)=>Demo()));
           },
           label: const Text(Strings.add)),
-      appBar:
-          buildAppBar(context: context, title: Strings.noteList, isHome: true),
+      appBar: buildAppBar(
+          context: context,
+          title: Strings.noteList,
+          isHome: true,
+          night: night),
       body: Stack(
         children: [
           night
-              ? Lottie.asset(Strings.night,
-                  height: 100.h, width: 100.w, fit: BoxFit.fill)
+              ? RiveAnimation.asset(
+                  Strings.night,
+                  fit: BoxFit.cover,
+                )
               : const SizedBox(),
           Lottie.asset(Strings.background, height: 100.h, width: 100.w),
           !night ? Lottie.asset(Strings.bird, height: 200) : const SizedBox(),
@@ -98,16 +106,39 @@ class _NoteListState extends State<NoteList>
               ],
             ),
           ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                night
+                    ? animationController.forward()
+                    : animationController.reverse();
+                night = !night;
+              });
+            },
+            child: Lottie.asset(
+              fit: BoxFit.fill,
+              alignment: Alignment.topLeft,
+              onLoaded: (composition) {
+                animationController.duration = composition.duration;
+              },
+              Strings.themeSwitch,
+              height: 15.h,
+              width: 30.w,
+              controller: animationController,
+              // animate: night,
+              //repeat: night
+            ),
+          ),
           DraggableScrollableSheet(
             initialChildSize: 0.67,
             minChildSize: 0.67,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25)),
-                  color: AppColors.black54,
+                  color: night ? Colors.white24 : AppColors.black54,
                 ),
                 child: Column(
                   children: [
@@ -158,29 +189,6 @@ class _NoteListState extends State<NoteList>
                 ),
               );
             },
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                log("toggled---$night");
-                night
-                    ? animationController.forward()
-                    : animationController.reverse();
-                night = !night;
-              });
-            },
-            child: Lottie.asset(
-              fit: BoxFit.fill,
-              alignment: Alignment.topLeft,
-              onLoaded: (composition) {
-                animationController.duration = composition.duration;
-              },
-              Strings.themeSwitch,
-              height: 15.h,
-              width: 30.w,
-              controller: animationController,
-              animate: false,
-            ),
           ),
         ],
       ),

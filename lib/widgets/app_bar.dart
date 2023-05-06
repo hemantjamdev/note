@@ -5,8 +5,13 @@ import 'package:note/local_storage/local_storage.dart';
 import 'package:note/widgets/delete_all.dart';
 
 AppBar buildAppBar(
-    {required BuildContext context, String? title, bool isHome = false}) {
+    {required BuildContext context,
+    String? title,
+    bool isHome = false,
+    bool night = false}) {
   return AppBar(
+    elevation: 0,
+    backgroundColor: night ? Colors.black54 : Colors.white,
     automaticallyImplyLeading: false,
     title: Hero(
       tag: Strings.titleHero,
@@ -76,5 +81,7 @@ saveTitle(BuildContext context, String? title) async {
       );
     },
   );
-  update&&controller.text.isNotEmpty ? dbHelper.saveTitle(controller.text) : null;
+  update && controller.text.isNotEmpty
+      ? dbHelper.saveTitle(controller.text)
+      : null;
 }

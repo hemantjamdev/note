@@ -6,7 +6,7 @@ import 'package:note/widgets/confirmation_dialog.dart';
 Widget buildDeleteAll({required BuildContext context, required String text}) {
   DBHelper dbHelper = DBHelper();
   return IconButton(
-    icon: AppIcons.delete,
+    icon:Icon(Icons.delete,),
     onPressed: () {
       confirmation(context: context, text: text).then((value) {
         if (value) {
