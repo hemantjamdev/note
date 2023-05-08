@@ -17,9 +17,11 @@ Slidable noteWidget(
   String onlyHour = DateFormat("hh:mm").format(note.time);
   return Slidable(
     endActionPane: ActionPane(
+
       motion: const DrawerMotion(),
       children: [
         Flexible(
+
           flex: 1,
           child: Container(
               margin: const EdgeInsets.all(10),
@@ -32,6 +34,7 @@ Slidable noteWidget(
               )),
         ),
         Flexible(
+
           flex: 1,
           child: Container(
             margin: const EdgeInsets.all(10),
