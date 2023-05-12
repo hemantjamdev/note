@@ -51,6 +51,13 @@ class DBHelper {
     hive.clear();
   }
 
+  Future<List<NoteModel>> getAll() async {
+    List<NoteModel> notes = <NoteModel>[];
+    final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
+    notes = hive.values.toList();
+    return notes;
+  }
+
   Future<NoteModel?> getNoteByKey(String key) async {
     final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
     return hive.get(key);

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -12,6 +13,7 @@ import 'note_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   Directory dir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   Hive.registerAdapter(NoteModelAdapter());

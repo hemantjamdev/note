@@ -18,4 +18,22 @@ class NoteModel {
       required this.disc,
       required this.time,
       required this.key});
+
+  factory NoteModel.fromJson(Map<String, dynamic> json) {
+    return NoteModel(
+      key: json['key'],
+      title: json['title'],
+      disc: json['disc'],
+      time: DateTime.parse(json['time']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'key': key,
+      'title': title,
+      'disc': disc,
+      'time': time.toIso8601String(),
+    };
+  }
 }

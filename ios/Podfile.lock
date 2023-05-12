@@ -6,6 +6,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - rive_common (0.0.1):
+    - Flutter
   - share_plus (0.0.1):
     - Flutter
   - Toast (4.0.0)
@@ -14,6 +16,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - rive_common (from `.symlinks/plugins/rive_common/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
 
 SPEC REPOS:
@@ -27,6 +30,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/fluttertoast/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
+  rive_common:
+    :path: ".symlinks/plugins/rive_common/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
 
@@ -34,6 +39,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   fluttertoast: eb263d302cc92e04176c053d2385237e9f43fad0
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  rive_common: 60ae7896ab40f9513974f36f015de33f70d2c5c5
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 

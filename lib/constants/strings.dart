@@ -38,6 +38,8 @@ class Strings {
   static const String owl = "assets/animation/owl.json";
   static const String girl = "assets/animation/girl.riv";
   static const String themeSwitch = "assets/animation/switch.json";
+  static const String googleIcon = "assets/animation/google_icon.json";
+  static const String googleLoading = "assets/animation/google_loading.json";
 
   ///hero tag
   static const String titleHero = "title";

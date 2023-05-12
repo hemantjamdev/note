@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:note/constants/colors.dart';
@@ -8,7 +6,6 @@ import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/model/note_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note/screens/Demo.dart';
 import 'package:note/utils/date_formate.dart';
 import 'package:note/widgets/app_bar.dart';
 import 'package:rive/rive.dart';
@@ -48,10 +45,6 @@ class NoteListState extends State<NoteList>
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +54,6 @@ class NoteListState extends State<NoteList>
           heroTag: Strings.fabHero,
           onPressed: () {
             Navigator.pushNamed(context, RoutesName.noteAddRoute);
-            //Navigator.push(context,MaterialPageRoute(builder: (context)=>Demo()));
           },
           label: const Text(Strings.add)),
       appBar: buildAppBar(
@@ -72,7 +64,7 @@ class NoteListState extends State<NoteList>
       body: Stack(
         children: [
           night
-              ? RiveAnimation.asset(
+              ? const RiveAnimation.asset(
                   Strings.night,
                   fit: BoxFit.cover,
                 )
@@ -125,9 +117,7 @@ class NoteListState extends State<NoteList>
               height: 15.h,
               width: 30.w,
               controller: animationController,
-              // animate: night,
-              //repeat: night
-            ),
+                         ),
           ),
           DraggableScrollableSheet(
             initialChildSize: 0.67,

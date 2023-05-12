@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/widgets/delete_all.dart';
+
+import 'edit_title.dart';
+import 'g_backup.dart';
 
 AppBar buildAppBar(
     {required BuildContext context,
@@ -10,6 +14,7 @@ AppBar buildAppBar(
     bool isHome = false,
     bool night = false}) {
   return AppBar(
+    leading: isHome ? backup() : null,
     elevation: 0,
     backgroundColor: night ? Colors.black54 : Colors.white,
     automaticallyImplyLeading: false,
@@ -48,40 +53,4 @@ AppBar buildAppBar(
           : const SizedBox(),
     ],
   );
-}
-
-saveTitle(BuildContext context, String? title) async {
-  TextEditingController controller = TextEditingController();
-  DBHelper dbHelper = DBHelper();
-  bool update = await showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text(Strings.updateTitle),
-        content: TextField(
-          onSubmitted: (value) => Navigator.pop(context, true),
-          controller: controller,
-          maxLength: 10,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-          ),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
-              child: const Text(Strings.update)),
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context, false);
-              },
-              child: const Text(Strings.cancel)),
-        ],
-      );
-    },
-  );
-  update && controller.text.isNotEmpty
-      ? dbHelper.saveTitle(controller.text)
-      : null;
 }
