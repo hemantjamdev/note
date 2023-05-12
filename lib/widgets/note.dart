@@ -22,6 +22,9 @@ Slidable noteWidget(
       children: [
         Flexible(
 
+
+
+
           flex: 1,
           child: Container(
               margin: const EdgeInsets.all(10),
