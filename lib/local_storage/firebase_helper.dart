@@ -43,12 +43,12 @@ class FirebaseHelper {
     UserCredential cred = await auth.signInWithCredential(credential);
     User? user = cred.user;
     if (user != null) {
-      uploadNote(user);
+      getBackup(user);
     }
     return;
   }
 
-  static uploadNote(User user) async {
+  static getBackup(User user) async {
     DBHelper dbHelper = DBHelper();
     List<NoteModel> list = await dbHelper.getAll();
     if (list.isNotEmpty) {
@@ -61,6 +61,8 @@ class FirebaseHelper {
       log("uploaded success");
     }
   }
+
+  static fetchBackup() {}
 
   static void signOut() async {
     await googleSignIn.signOut();
