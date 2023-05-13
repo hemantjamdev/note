@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:note/constants/colors.dart';
-import 'package:sizer/sizer.dart';
 
 class AppIcons {
   static const Icon done = Icon(Icons.done);

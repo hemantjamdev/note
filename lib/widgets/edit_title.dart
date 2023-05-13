@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:lottie/lottie.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
-import 'package:note/widgets/delete_all.dart';
 saveTitle(BuildContext context, String? title) async {
   TextEditingController controller = TextEditingController();
   DBHelper dbHelper = DBHelper();

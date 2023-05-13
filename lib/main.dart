@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/model/note_model.dart';
-import 'package:note/routes.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'note_app.dart';

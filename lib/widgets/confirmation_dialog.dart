@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:note/constants/strings.dart';
 
-Future<bool> confirmation(
-    {required BuildContext context, required String text}) async {
+Future<bool?> confirmation({
+  required BuildContext context,
+  required String title,
+  required String confirm,
+  required String cancel,
+  required String content,
+}) async {
   return await showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text(Strings.confirm),
-        content: Text("${Strings.areYourSure} $text"),
+        title: Text(title),
+        content: Text(content),
         actions: [
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text(Strings.cancel),
+            child: Text(cancel),
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop(true);
+              if (context.mounted) Navigator.of(context).pop(true);
             },
-            child: const Text(Strings.delete),
+            child: Text(confirm),
           ),
         ],
       );

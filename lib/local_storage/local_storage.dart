@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:hive/hive.dart';
 import 'package:note/constants/strings.dart';
 import 'package:note/model/note_model.dart';
@@ -19,6 +17,11 @@ class DBHelper {
   saveTitle(String titleName) async {
     final hive = await Hive.openBox<String>(Strings.titleDatabaseName);
     hive.put(Strings.titleDatabaseKey, titleName);
+  }
+
+  restoreBackup(NoteModel noteModel) async {
+    final hive = await Hive.openBox<NoteModel>(Strings.databaseName);
+    hive.put(noteModel.key, noteModel);
   }
 
   add({required String title, required String disc}) async {

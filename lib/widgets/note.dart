@@ -17,27 +17,22 @@ Slidable noteWidget(
   String onlyHour = DateFormat("hh:mm").format(note.time);
   return Slidable(
     endActionPane: ActionPane(
-
       motion: const DrawerMotion(),
       children: [
         Flexible(
-
-
-
-
           flex: 1,
           child: Container(
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: AppColors.white, width: 3)),
-              child: IconButton(
-                onPressed: () => handleDelete(note.key),
-                icon: AppIcons.delete,
-              )),
+            margin: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(color: AppColors.white, width: 3)),
+            child: IconButton(
+              onPressed: () => handleDelete(note.key),
+              icon: AppIcons.delete,
+            ),
+          ),
         ),
         Flexible(
-
           flex: 1,
           child: Container(
             margin: const EdgeInsets.all(10),
@@ -73,7 +68,7 @@ Slidable noteWidget(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12)),
-                color:AppColors.white,
+                color: AppColors.white,
               ),
               child: ListTile(
                 title: Text(
