@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:note/constants/app_icons.dart';
+import 'package:note/constants/strings.dart';
 import 'package:note/local_storage/local_storage.dart';
 import 'package:note/widgets/confirmation_dialog.dart';
 
-Widget buildDeleteAll({required BuildContext context, required String text}) {
+Widget buildDeleteAll({required BuildContext context}) {
   DBHelper dbHelper = DBHelper();
   return IconButton(
-    icon:Icon(Icons.delete,),
-    onPressed: () {
-      confirmation(context: context, text: text).then((value) {
-        if (value) {
+    icon: const Icon(Icons.delete),
+    onPressed: () async {
+      if (context.mounted) {
+        bool? value = await confirmation(
+            content: Strings.areYourSure,
+            context: context,
+            title: Strings.delete,
+            cancel: Strings.cancel,
+            confirm: Strings.confirm);
+        if (value != null && value) {
           dbHelper.deleteAll();
         }
-      });
+      }
     },
   );
 }
